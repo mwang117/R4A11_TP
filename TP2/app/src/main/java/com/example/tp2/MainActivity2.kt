@@ -1,5 +1,6 @@
 package com.example.tp2
 
+import com.example.tp2.utils.AgeCalculator
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -19,25 +20,26 @@ class MainActivity2 : ComponentActivity() {
 
         // Récupération du nom transmis depuis MainActivity
         val userName = intent.getStringExtra("USER_NAME") ?: "Utilisateur"
-        val userYear = intent.getStringExtra("USER_YEAR") ?: "Année inconnue"
+        val userYear = intent.getStringExtra("USER_YEAR")?.toIntOrNull() ?: 0
+        val ageCalculator = AgeCalculator()
+        val userAge = if (userYear > 0) ageCalculator.calculateAge(userYear) else -1
 
         setContent {
             TP2Theme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     SecondScreen(
                         name = userName,
-                        year = userYear,
+                        age = if (userAge >= 0) userAge.toString() else "inconnue",
                         modifier = Modifier.padding(innerPadding)
                     )
                 }
             }
         }
-
     }
 }
 
 @Composable
-fun SecondScreen(name: String, year: String, modifier: Modifier = Modifier) {
+fun SecondScreen(name: String, age: String, modifier: Modifier = Modifier) {
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -45,7 +47,7 @@ fun SecondScreen(name: String, year: String, modifier: Modifier = Modifier) {
         verticalArrangement = Arrangement.Center
     ) {
         Text(
-            text = "Hello $name ! Vous êtes né en $year",
+            text = "Hello $name ! Vous avez $age ans",
             modifier = Modifier
                 .align(Alignment.CenterHorizontally)
                 .padding(vertical = 8.dp)
@@ -53,11 +55,10 @@ fun SecondScreen(name: String, year: String, modifier: Modifier = Modifier) {
     }
 }
 
-
 @Preview(showBackground = true)
 @Composable
 fun SecondScreenPreview() {
     TP2Theme {
-        SecondScreen(name = "Utilisateur", year = "2000")
+        SecondScreen(name = "Utilisateur", age = "23")
     }
 }
