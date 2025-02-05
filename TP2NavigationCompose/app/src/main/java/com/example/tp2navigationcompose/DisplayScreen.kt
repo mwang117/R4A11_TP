@@ -4,17 +4,14 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 
 @Composable
-fun FormScreen(navController: NavController) {
-    var name by remember { mutableStateOf("") }
-
+fun DisplayScreen(navController: NavController, name: String) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -23,23 +20,21 @@ fun FormScreen(navController: NavController) {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
-            text = "Page du formulaire",
+            text = "Affichage du formulaire",
             style = MaterialTheme.typography.titleMedium
         )
 
-        TextField(
-            value = name,
-            onValueChange = { newText -> name = newText },
-            label = { Text("Entrez votre nom") },
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(vertical = 16.dp)
+        Spacer(modifier = Modifier.height(24.dp))
+
+        Text(
+            text = name,
+            style = MaterialTheme.typography.titleLarge
         )
 
         Spacer(modifier = Modifier.height(24.dp))
-        Button(onClick = { navController.navigate("display/$name")
-                }) {
-            Text(text = "Valider")
+
+        Button(onClick = { navController.popBackStack() }) {
+            Text(text = "Retour")
         }
     }
 }
