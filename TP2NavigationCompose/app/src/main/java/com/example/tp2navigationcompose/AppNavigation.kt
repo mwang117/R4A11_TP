@@ -19,11 +19,15 @@ fun AppNavigation() {
             FormScreen(navController = navController)
         }
         composable(
-            route = "display/{name}",
-            arguments = listOf(navArgument("name") { defaultValue = "" })
+            route = "display/{name}/{age}",
+            arguments = listOf(
+                navArgument("name") { defaultValue = "" },
+                navArgument("age") { defaultValue = "0" }
+            )
         ) { backStackEntry ->
             val name = backStackEntry.arguments?.getString("name") ?: "Nom inconnu"
-            DisplayScreen(navController = navController, name = name)
+            val age = backStackEntry.arguments?.getString("age") ?: "Âge inconnu"
+            DisplayScreen(navController = navController, name = name, age = age)
         }
     }
 }

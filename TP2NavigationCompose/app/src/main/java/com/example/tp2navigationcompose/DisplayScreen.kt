@@ -11,7 +11,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 
 @Composable
-fun DisplayScreen(navController: NavController, name: String) {
+fun DisplayScreen(navController: NavController, name: String, age: String) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -28,6 +28,11 @@ fun DisplayScreen(navController: NavController, name: String) {
 
         Text(
             text = name,
+            style = MaterialTheme.typography.titleLarge
+        )
+
+        Text(
+            text = "Âge : $age ans",
             style = MaterialTheme.typography.titleLarge
         )
 
